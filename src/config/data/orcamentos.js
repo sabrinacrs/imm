@@ -1,0 +1,58 @@
+export const orcamentos = [
+    {
+        id: 1,
+        vendedor: 'Vendedor',
+        cliente: 'Cliente',
+        usuario: 'Usuário',
+        planoPagamento: '--',
+        dataEmissao: '12/03/2018',
+        dataFaturamento: '12/03/2018',
+        reservaMercadoria: true,
+        pendente: false,
+        desconto: 0,
+        total: 100.99,
+        observacao: 'Observação'
+    },
+    {
+        id: 2,
+        vendedor: 'Vendedor',
+        cliente: 'Cliente',
+        usuario: 'Usuário',
+        planoPagamento: '--',
+        dataEmissao: '12/03/2018',
+        dataFaturamento: '12/03/2018',
+        reservaMercadoria: true,
+        pendente: false,
+        desconto: 0,
+        total: 100.99,
+        observacao: 'Observação'
+    },
+    {
+        id: 3,
+        vendedor: 'Vendedor',
+        cliente: 'Cliente',
+        usuario: 'Usuário',
+        planoPagamento: '--',
+        dataEmissao: '12/03/2018',
+        dataFaturamento: '12/03/2018',
+        reservaMercadoria: true,
+        pendente: false,
+        desconto: 0,
+        total: 100.99,
+        observacao: 'Observação'
+    },
+    {
+        id: 4,
+        vendedor: 'Vendedor',
+        cliente: 'Cliente',
+        usuario: 'Usuário',
+        planoPagamento: '--',
+        dataEmissao: '12/03/2018',
+        dataFaturamento: '12/03/2018',
+        reservaMercadoria: true,
+        pendente: false,
+        desconto: 0,
+        total: 100.99,
+        observacao: 'Observação'
+    },
+]
