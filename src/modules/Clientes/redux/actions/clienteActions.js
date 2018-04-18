@@ -1,5 +1,5 @@
 import { save, findAll, findById, deleteAll } from '../../controller/ClienteController';
-import { validateEmail, validaCnpj, validaCpf } from '../../../../utils/validations';
+import { validateEmail, validaCnpj, validaCpf, validaCpfCnpj } from '../../../../utils/validations';
 
 export function modifyNome(nome) {
     return {
@@ -81,7 +81,7 @@ export function modifyCpfCnpj(cpfCnpj) {
         type: 'MODIFY_CPF_CNPJ',
         payload: {
             cpfCnpj,
-            cpfCnpjIsValid: (validaCnpj(cpfCnpj) || validaCpf(cpfCnpj))
+            cpfCnpjIsValid: validaCpfCnpj(cpfCnpj)
         },
     }
 }

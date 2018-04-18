@@ -7,7 +7,7 @@ import { Hoshi } from 'react-native-textinput-effects';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import estilos from '../../../appStyle';
-import { validateEmail, validaCnpj, validaCpf } from '../../../utils/validations';
+import { validateEmail, validaCnpj, validaCpf, validaCpfCnpj } from '../../../utils/validations';
 import Cliente from '../../../models/Cliente';
 import { 
     clear, 
@@ -30,13 +30,14 @@ class ClienteCreate extends Component {
         const { clear } = props;
         console.log('ON NAVIGATION OPTIONS');
         console.log(props);
+        console.log(this.clear);
 
         return {
             title: 'Novo cliente',
             headerRight: (
                 <TouchableHighlight
                     style={{ paddingRight: 20 }}
-                    onPress={() => clear()}
+                    onPress={() => false}
                 >
                     <Icon name="trash" size={30} color="#4F5B66" />
                 </TouchableHighlight>
@@ -46,6 +47,12 @@ class ClienteCreate extends Component {
 
     constructor(props) {
         super(props);
+
+        this.clear = this.clear.bind(this);
+    }
+
+    clearFields() {
+        this.props.clear();
     }
 
     setNome(nome) {
@@ -90,7 +97,12 @@ class ClienteCreate extends Component {
 
     saveNewCliente() {
         const { nome, email, cpfCnpj, endereco, numero, bairro, telefone, cep, cidade, uf } = this.props;
-        const newCliente = new Cliente(nome, email, cpfCnpj, endereco, numero, bairro, telefone, cep, cidade, uf);
+        
+        // parse numero
+        const numeroInt = (numero == "") ? 0 : parseInt(numero);
+
+        // instância de novo cliente
+        const newCliente = new Cliente(nome, email, cpfCnpj, endereco, numeroInt, bairro, telefone, cep, cidade, uf);
 
         if(this.formValidate()) {
             // remove pontos e traços do cpf/cnpj para gravar apenas numeros no banco
@@ -125,7 +137,7 @@ class ClienteCreate extends Component {
         }
 
         // valida cpf / cnpj
-        if(this.props.cpfCnpj !== "" && !validaCnpj(this.props.cpfCnpj) && !validaCpf(this.props.cpfCnpj)) {
+        if(this.props.cpfCnpj !== "" && !validaCpfCnpj(this.props.cpfCnpj)) {
             this.setCpfCnpj(this.props.cpfCnpj);
             flag = false;
         }
@@ -141,7 +153,6 @@ class ClienteCreate extends Component {
 
     getClientes() {
         getAllCientes();
-
         console.log(this.props.clientes);
     }
 
@@ -214,6 +225,7 @@ class ClienteCreate extends Component {
                                 labelStyle={{ fontFamily: 'CircularStd-Book' }}
                                 inputStyle={styles.textInputs}
                                 keyboardType='numeric'
+                                maxLength={20}
                             />
                             {
                                 (this.props.cpfCnpjIsValid) ? null: 

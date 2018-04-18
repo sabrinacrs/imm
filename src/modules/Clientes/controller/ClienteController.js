@@ -6,16 +6,10 @@ import realmDB from '../../../schemas/schemas';
 export function save(newCliente) {
     // pegar current id pq realm não tem autoincrement
     newCliente.id = findMaxId();
-    // newCliente.id = Math.floor(Math.random() * (100 - 1)) + 1;
 
     realmDB.write(() => {
         const cliente = realmDB.create(SCHEMA_NAME, newCliente);
-
-        console.log(cliente);
     });
-    
-    console.log('ON SAVE - MAX ID');
-    console.log(findMaxId());
 }
 
 export function update(user) {
@@ -46,7 +40,6 @@ export function findMaxId() {
 
 export function deleteAll() {
     console.log('ON DELETE ALL');
-
     realmDB.write(() => {
         let allClientes = realmDB.objects(SCHEMA_NAME);
         realmDB.delete(allClientes); // delete all clientes

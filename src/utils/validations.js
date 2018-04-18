@@ -10,7 +10,7 @@ export function validaCpf(cpf) {
     cpf = cpf.replace(/[^\d]/g,"");
 
     digitosIguais = 1;
-    if (cpf.length < 11)
+    if (cpf.length != 11)
         return false;
     for (i = 0; i < cpf.length - 1; i++)
         if (cpf.charAt(i) != cpf.charAt(i + 1)) {
@@ -58,4 +58,14 @@ export function validaCnpj(c) {
 
     return true;
 };
+
+export function validaCpfCnpj(cpfCnpj) {
+    if(!validaCpf(cpfCnpj)) {
+        if(!validaCnpj(cpfCnpj)) {
+            return false;
+        }
+    }
+    
+    return true;
+}
 
