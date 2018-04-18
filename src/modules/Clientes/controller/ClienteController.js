@@ -12,12 +12,18 @@ export function save(newCliente) {
     });
 }
 
-export function update(user) {
-    
+export function update(cliente) {
+    realmDB.write(() => {
+        console.log('ON UPDATE');
+        console.log(cliente);
+        realm.create(SCHEMA_NAME, cliente, true);
+    });
 }
 
-export function remove(user) {
-
+export function remove(cliente) {
+    console.log('ON DELETE');
+    console.log(cliente);
+    realmDB.delete(cliente);
 }
 
 export function findAll() {

@@ -17,6 +17,7 @@ import OrcamentoFiltersView from '../../modules/Orcamentos/components/containers
 import ClientesList from '../../modules/Clientes/components/ClientesList';
 import ClienteDetail from '../../modules/Clientes/components/ClienteDetail';
 import ClienteCreate from '../../modules/Clientes/components/ClienteCreate';
+// import ClienteUpdate from '../../modules/Clientes/components/ClienteUpdate';
 
 import ClienteSearch from '../../modules/Clientes/components/ClienteSearch';
 

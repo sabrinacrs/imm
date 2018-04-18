@@ -2,16 +2,41 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TextInput, ScrollView, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, SearchBar, Slider } from 'react-native-elements';
+import { setClienteToUpdate } from '../redux/actions/clienteActions';
 
 export default class ClienteDetail extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const { navigate } = navigation;
+
+        return {
+            title: 'Cliente',
+            headerRight: (
+                <TouchableHighlight
+                    style={{ paddingRight: 20 }}
+                    onPress={() => navigate('ClienteCreateStack', this.props.cliente)}
+                >
+                    <Icon name="pen" size={30} color="#4F5B66" />
+                </TouchableHighlight>
+            ),
+        };
+    };
+
     constructor(props) {
         super(props);
 
+        const cliente = this.props.navigation.state.params;
+        this.props.setClienteToUpdate(cliente);
     }
 
     render() {
-        const cliente = this.props.navigation.state.params;
-        let editable = false;
+        // const cliente = this.props.navigation.state.params;
+        // this.props.setClienteToUpdate(cliente);
+
+        console.log('PROPS');
+        console.log(this.props);
+
+        console.log('PROP CLIENTE');
+        console.log(this.props.cliente);
 
         return (
             <View style={styles.container}>
@@ -24,6 +49,7 @@ export default class ClienteDetail extends Component {
                                 editable={this.editable}
                                 underlineColorAndroid='#00798c'
                                 style={styles.textInput} 
+                                editable={false}
                             />
                         </View>
 
@@ -34,6 +60,7 @@ export default class ClienteDetail extends Component {
                                 editable={this.editable}
                                 underlineColorAndroid='#00798c'
                                 style={styles.textInput} 
+                                editable={false}
                             />
                         </View>
 
@@ -44,6 +71,7 @@ export default class ClienteDetail extends Component {
                                 editable={this.editable}
                                 underlineColorAndroid='#00798c'
                                 style={styles.textInput} 
+                                editable={false}
                             />
                         </View>
 
@@ -54,6 +82,7 @@ export default class ClienteDetail extends Component {
                                 editable={this.editable}
                                 underlineColorAndroid='#00798c'
                                 style={styles.textInput} 
+                                editable={false}
                             />
                         </View>
 
@@ -65,6 +94,7 @@ export default class ClienteDetail extends Component {
                                     editable={this.editable}
                                     underlineColorAndroid='#00798c'
                                     style={styles.textInput} 
+                                    editable={false}
                                 />
                             </View>
 
@@ -75,6 +105,7 @@ export default class ClienteDetail extends Component {
                                     editable={this.editable}
                                     underlineColorAndroid='#00798c'
                                     style={styles.textInput} 
+                                    editable={false}
                                 />
                             </View>
                         </View>
@@ -86,6 +117,7 @@ export default class ClienteDetail extends Component {
                                 editable={this.editable}
                                 underlineColorAndroid='#00798c'
                                 style={styles.textInput} 
+                                editable={false}
                             />
                         </View>
 
@@ -96,6 +128,7 @@ export default class ClienteDetail extends Component {
                                 editable={this.editable}
                                 underlineColorAndroid='#00798c'
                                 style={styles.textInput} 
+                                editable={false}
                             />
                         </View>
 
@@ -106,7 +139,8 @@ export default class ClienteDetail extends Component {
                                     value={cliente.cidade}
                                     editable={this.editable}
                                     underlineColorAndroid='#00798c'
-                                    style={styles.textInput} 
+                                    style={styles.textInput}
+                                    editable={false} 
                                 />
                             </View>
                             <View style={[styles.row, {width: '20%'}]}>
@@ -115,7 +149,8 @@ export default class ClienteDetail extends Component {
                                     value={cliente.uf}
                                     editable={this.editable}
                                     underlineColorAndroid='#00798c'
-                                    style={styles.textInput} 
+                                    style={styles.textInput}
+                                    editable={false} 
                                 />
                             </View>
                         </View>
@@ -190,3 +225,15 @@ const styles = StyleSheet.create({
         right: 0
     }
 });
+
+function mapStateToProps() {
+    return {
+        cliente: state.clienteReducers.cliente,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        setClienteToUpdate
+    }, dispatch);
+}

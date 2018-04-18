@@ -110,6 +110,19 @@ export function saveCliente(newCliente) {
 
 export function updateCliente(cliente) {
     // update cliente
+    update(cliente);
+    
+    let clientes = findAll();
+
+    const teste = {
+        nome: 'teste'
+    }
+
+    // usar redux thunk
+    return {
+        type: 'TESTE_CREATE',
+        payload: teste,
+    }
 }
 
 export function dropTableClientes() {

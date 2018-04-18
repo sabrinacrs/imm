@@ -6,7 +6,7 @@ import { TextInputMask } from 'react-native-masked-text';
 import { Hoshi } from 'react-native-textinput-effects';
 
 import estilos from '../../../../appStyle';
-import { validateEmail, validaCnpj, validaCpf } from '../../../../utils/validations';
+import { validateEmail, validaCnpj, validaCpf, validaCpfCnpj } from '../../../../utils/validations';
 import Cliente from '../../../../models/Cliente';
 import { 
     clear, 
@@ -21,12 +21,17 @@ import {
     modifyCidade,
     modifyUF,
     saveCliente, 
+    updateCliente,
     getAllCientes,
 } from '../../redux/actions/clienteActions';
 
 class ClienteFormView extends Component {
     constructor(props) {
         super(props);
+    }
+
+    clearFields() {
+        this.props.clear();
     }
 
     setNome(nome) {
@@ -71,7 +76,12 @@ class ClienteFormView extends Component {
 
     saveNewCliente() {
         const { nome, email, cpfCnpj, endereco, numero, bairro, telefone, cep, cidade, uf } = this.props;
-        const newCliente = new Cliente(nome, email, cpfCnpj, endereco, numero, bairro, telefone, cep, cidade, uf);
+        
+        // parse numero
+        const numeroInt = (numero == "") ? 0 : parseInt(numero);
+
+        // instância de novo cliente
+        const newCliente = new Cliente(nome, email, cpfCnpj, endereco, numeroInt, bairro, telefone, cep, cidade, uf);
 
         if(this.formValidate()) {
             // remove pontos e traços do cpf/cnpj para gravar apenas numeros no banco
@@ -79,6 +89,24 @@ class ClienteFormView extends Component {
 
             this.props.saveCliente(newCliente);
             
+            // clear fields
+            this.props.clear();
+        }
+    }
+
+    updateCliente() {
+        const { nome, email, cpfCnpj, endereco, numero, bairro, telefone, cep, cidade, uf } = this.props;
+        // parse numero
+        const numeroInt = (numero == "") ? 0 : parseInt(numero);
+        const clienteUpdate = new Cliente(nome, email, cpfCnpj, endereco, numeroInt, bairro, telefone, cep, cidade, uf);
+        
+        if(formValidate()) {
+            // remove pontos e traços do cpf/cnpj para gravar apenas numeros no banco
+            clienteUpdate.cpfCnpj = newCliente.cpfCnpj.replace(/[^\d]/g,"");
+            clienteUpdate.id = this.props.cliente.id;
+
+            this.props.updateCliente(clienteUpdate);
+
             // clear fields
             this.props.clear();
         }
@@ -106,7 +134,7 @@ class ClienteFormView extends Component {
         }
 
         // valida cpf / cnpj
-        if(this.props.cpfCnpj !== "" && !validaCnpj(this.props.cpfCnpj) && !validaCpf(this.props.cpfCnpj)) {
+        if(this.props.cpfCnpj !== "" && !validaCpfCnpj(this.props.cpfCnpj)) {
             this.setCpfCnpj(this.props.cpfCnpj);
             flag = false;
         }
@@ -122,11 +150,12 @@ class ClienteFormView extends Component {
 
     getClientes() {
         getAllCientes();
-
         console.log(this.props.clientes);
     }
 
     render() {
+        console.log(this.props);
+
         return (
             <View>
                 <ScrollView style={styles.main}> 
@@ -195,6 +224,7 @@ class ClienteFormView extends Component {
                                 labelStyle={{ fontFamily: 'CircularStd-Book' }}
                                 inputStyle={styles.textInputs}
                                 keyboardType='numeric'
+                                maxLength={20}
                             />
                             {
                                 (this.props.cpfCnpjIsValid) ? null: 
